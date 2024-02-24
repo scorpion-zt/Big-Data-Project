@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3e3ad56424.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Road Safety Prediction</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+
+    <h1>Road Safety Prediction</h1>
+    
+    <form method="POST" action="/predict">
+        <label for="latitude">Latitude :</label>
+        <input type="text" name="latitude" required><br>
+        
+        <label for="longitude">Longitude :</label>
+        <input type="text" name="longitude" required><br>
+
+        <label for="weather_condition">Weather Condition :</label>
+        <input type="text" name="weather_condition" required><br>
+
+        <label for="time_of_day">Time of Day :</label>
+        <input type="text" name="time_of_day" required><br>
+
+        <div class="button-container">
+        <button type="submit">Predict</button>
+        </div>
+    </form>
+
+    {% if prediction_text %}
+    
+    <div class="popup" id="resultPopup" onclick="closePopup()">
+        <div class="popup-content" onclick="event.stopPropagation();">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Prediction Result</h2>
+            <p id="predictionResult">{{ prediction_text }}</p>
+        </div>
+    </div>
+
+    <script>
+        if ("{{ prediction_text }}") {
+            showPopup();
+        }
+
+        function showPopup() {
+            document.getElementById('resultPopup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('resultPopup').style.display = 'none';
+        }
+    </script>
+    {% endif %}
+
+</body>
+</html>
